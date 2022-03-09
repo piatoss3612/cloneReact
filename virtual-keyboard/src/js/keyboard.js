@@ -5,6 +5,8 @@ export class Keyboard {
   #keyboardEl;
   #inputGroupEl;
   #inputEl;
+  #keyPress = false;
+  #mouseDown = false;
 
   constructor() {
     this.#assignElement();
@@ -23,9 +25,11 @@ export class Keyboard {
   #addEvent() {
     this.#switchEl.addEventListener("change", this.#onChangeTheme);
     this.#fontSelectEl.addEventListener("change", this.#onChangeFont);
-    document.addEventListener("keydown", this.#onKeyUp);
-    document.addEventListener("keyup", this.#onKeyDown);
+    document.addEventListener("keydown", this.#onKeyDown);
+    document.addEventListener("keyup", this.#onKeyUp);
     this.#inputEl.addEventListener("input", this.#onInput);
+    this.#keyboardEl.addEventListener("mousedown", this.#onMouseDown);
+    document.addEventListener("mouseup", this.#onMouseUp);
   }
 
   #onChangeTheme = (event) => {
@@ -39,7 +43,9 @@ export class Keyboard {
     document.body.style.fontFamily = event.target.value;
   };
 
-  #onKeyUp = (event) => {
+  #onKeyDown = (event) => {
+    if (this.#mouseDown) return;
+    this.#keyPress = true;
     this.#inputGroupEl.classList.toggle(
       "error",
       /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(event.key) || event.key === "Process"
@@ -49,7 +55,9 @@ export class Keyboard {
       ?.classList.add("active");
   };
 
-  #onKeyDown = (event) => {
+  #onKeyUp = (event) => {
+    if (this.#mouseDown) return;
+    this.#keyPress = false;
     this.#keyboardEl
       .querySelector(`[data-code=${event.code}]`)
       ?.classList.remove("active");
@@ -57,5 +65,29 @@ export class Keyboard {
 
   #onInput = (event) => {
     event.target.value = event.target.value.replace(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/, "");
+  };
+
+  #onMouseDown = (event) => {
+    if (this.#keyPress) return;
+    this.#mouseDown = true;
+    event.target.closest("div.key")?.classList.add("active");
+  };
+
+  #onMouseUp = (event) => {
+    if (this.#keyPress) return;
+    this.#mouseDown = false;
+    const keyEl = event.target.closest("div.key");
+    const isActive = !!keyEl?.classList.contains("active");
+    const val = keyEl?.dataset.val;
+    if (isActive && !!val && val !== "Space" && val !== "Backspace") {
+      this.#inputEl.value += val;
+    }
+    if (isActive && val === "Space") {
+      this.#inputEl.value += " ";
+    }
+    if (isActive && val === "Backspace") {
+      this.#inputEl.value = this.#inputEl.value.slice(0, -1);
+    }
+    this.#keyboardEl.querySelector(".active")?.classList.remove("active");
   };
 }
