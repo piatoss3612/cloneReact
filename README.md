@@ -15,3 +15,4 @@
 #### 2. 이미지 슬라이더
 
 - 기본 설정 가져오기 (webpack, eslint, prettier)
+- 폰트어썸 패키지 설치 & html, css, 이미지 파일 가져오기
