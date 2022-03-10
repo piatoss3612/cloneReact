@@ -5,6 +5,10 @@ export default class ImageSlider {
 
   #slideWidth = 0;
 
+  #intervalId;
+
+  #autoPlay = true;
+
   sliderWrapEl;
 
   sliderListEl;
@@ -15,6 +19,8 @@ export default class ImageSlider {
 
   indicatorWrapEl;
 
+  controlWrapEl;
+
   constructor() {
     this.assignElement();
     this.initSliderNumber();
@@ -23,6 +29,7 @@ export default class ImageSlider {
     this.addEvent();
     this.createIndicator();
     this.setIndicator();
+    this.initAutoPlay();
   }
 
   assignElement() {
@@ -31,6 +38,7 @@ export default class ImageSlider {
     this.nextBtnEl = this.sliderWrapEl.querySelector('#next');
     this.previousBtnEl = this.sliderWrapEl.querySelector('#previous');
     this.indicatorWrapEl = this.sliderWrapEl.querySelector('#indicator-wrap');
+    this.controlWrapEl = this.sliderWrapEl.querySelector('#control-wrap');
   }
 
   initSliderNumber = () => {
@@ -45,10 +53,15 @@ export default class ImageSlider {
     this.sliderListEl.style.width = `${this.#slideNumber * this.#slideWidth}px`;
   };
 
+  initAutoPlay = () => {
+    this.#intervalId = setInterval(this.moveToRight, 3000);
+  };
+
   addEvent() {
     this.nextBtnEl.addEventListener('click', this.moveToRight);
     this.previousBtnEl.addEventListener('click', this.moveToLeft);
     this.indicatorWrapEl.addEventListener('click', this.onClickIndicator);
+    this.controlWrapEl.addEventListener('click', this.togglePlay);
   }
 
   moveToRight = () => {
@@ -59,6 +72,7 @@ export default class ImageSlider {
     this.sliderListEl.style.left = `-${
       this.#slideWidth * this.#currentPosition
     }px`;
+    this.restartAutoPlay();
     this.setIndicator();
   };
 
@@ -70,6 +84,7 @@ export default class ImageSlider {
     this.sliderListEl.style.left = `-${
       this.#slideWidth * this.#currentPosition
     }px`;
+    this.restartAutoPlay();
     this.setIndicator();
   };
 
@@ -98,6 +113,27 @@ export default class ImageSlider {
         this.#slideWidth * this.#currentPosition
       }px`;
       this.setIndicator();
+    }
+  };
+
+  togglePlay = event => {
+    if (event.target.dataset.status === 'play') {
+      this.#autoPlay = true;
+      this.controlWrapEl.classList.add('play');
+      this.controlWrapEl.classList.remove('pause');
+      this.initAutoPlay();
+    } else if (event.target.dataset.status === 'pause') {
+      this.#autoPlay = false;
+      this.controlWrapEl.classList.add('pause');
+      this.controlWrapEl.classList.remove('play');
+      clearInterval(this.#intervalId);
+    }
+  };
+
+  restartAutoPlay = () => {
+    if (this.#autoPlay) {
+      clearInterval(this.#intervalId);
+      this.#intervalId = setInterval(this.moveToRight, 3000);
     }
   };
 }
