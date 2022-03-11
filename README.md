@@ -20,3 +20,8 @@
 - 인디케이터 구현
 - 오토플레이 기능 구현
 - 빌드
+
+#### 3. date picker
+
+- snowpack 설정
+- eslint, prettier 설정
