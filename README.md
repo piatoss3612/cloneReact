@@ -26,3 +26,5 @@
 - snowpack 설정
 - eslint, prettier 설정
 - html, scss 파일 가져오기
+- 날짜 조회 기능 구현
+- 오늘 날짜 표시
