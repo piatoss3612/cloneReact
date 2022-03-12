@@ -69,6 +69,8 @@ class DatePicker {
 
   addEvent = () => {
     this.dateInputEl.addEventListener('click', this.toggleCalendar);
+    this.nextBtnEl.addEventListener('click', this.moveToNextMonth);
+    this.prevBtnEl.addEventListener('click', this.moveToPrevMonth);
   };
 
   toggleCalendar = () => {
@@ -152,6 +154,26 @@ class DatePicker {
         .querySelector(`[data-date='${today}']`)
         .classList.add('today');
     }
+  };
+
+  moveToNextMonth = () => {
+    this.#calendarDate.month++;
+    if (this.#calendarDate.month > 11) {
+      this.#calendarDate.month = 0;
+      this.#calendarDate.year++;
+    }
+    this.updateMonth();
+    this.updateDates();
+  };
+
+  moveToPrevMonth = () => {
+    this.#calendarDate.month--;
+    if (this.#calendarDate.month < 0) {
+      this.#calendarDate.month = 11;
+      this.#calendarDate.year--;
+    }
+    this.updateMonth();
+    this.updateDates();
   };
 }
 
