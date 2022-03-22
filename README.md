@@ -38,3 +38,6 @@
 - @parcel/transformer-sass를 불러오지 못하는 문제가 발생하여
 - package.json이 날아가버리므로 snowpack을 사용했다
 - eslint & prettier 설정
+- 폰트어썸 패키지 설치 & html, css, 이미지 파일 가져오기
+  - snowpack에서 woff2, ttf 폰트 파일을 로드할 수 없는 문제
+- 프로젝트 보류
