@@ -37,3 +37,4 @@
 - 강의 내용대로 parcel을 사용하려고 했지만,
 - @parcel/transformer-sass를 불러오지 못하는 문제가 발생하여
 - package.json이 날아가버리므로 snowpack을 사용했다
+- eslint & prettier 설정
