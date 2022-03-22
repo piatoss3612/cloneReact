@@ -31,3 +31,9 @@
 - 날짜 선택 기능 구현
 - 빌드
 - `serve build` 명령어로 실행 가능
+
+#### 4. drawing board
+
+- 강의 내용대로 parcel을 사용하려고 했지만,
+- @parcel/transformer-sass를 불러오지 못하는 문제가 발생하여
+- package.json이 날아가버리므로 snowpack을 사용했다
