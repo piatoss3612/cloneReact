@@ -35,6 +35,7 @@
 #### 4. calculator
 
 - html, css 파일 작성
+- 계산기 로직 구현
 
 #### drawing board
 
