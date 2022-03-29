@@ -40,6 +40,7 @@
 ##### 5. bmi calculator
 
 - html, css 파일 작성
+- bmi 계산기 로직 구현
 
 #### drawing board
 

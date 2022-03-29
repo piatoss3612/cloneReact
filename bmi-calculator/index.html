@@ -8,7 +8,7 @@
     <title>Document</title>
   </head>
   <body>
-    <form onsubmit="onSubmit(event)">
+    <form onsubmit="onSubmit(event)" onreset="onReset()">
       <div class="row">
         <div class="form-inp">
           <label for="w">몸무게(kg)</label>
@@ -17,6 +17,7 @@
             class="inp"
             name="w"
             id="w"
+            min="30"
             placeholder="kg 단위"
           />
         </div>
@@ -27,10 +28,31 @@
             class="inp"
             name="h"
             id="h"
+            step="0.01"
+            min="0.5"
             placeholder="m 단위"
           />
         </div>
         <button type="submit" class="btn">결과</button>
+      </div>
+      <div id="res">
+        <div>
+          <meter
+            id="meter"
+            min="10"
+            max="30"
+            optimum="22"
+            low="18.5"
+            high="25"
+          ></meter>
+        </div>
+        <div class="res-text">
+          <div>당신의 BMI는 <span id="bmi"></span>입니다.</div>
+          <div><span id="state"></span>입니다.</div>
+        </div>
+        <div class="reset">
+          <button type="reset" class="btn reset">초기화</button>
+        </div>
       </div>
     </form>
     <script src="main.js"></script>
