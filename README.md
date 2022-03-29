@@ -32,7 +32,11 @@
 - 빌드
 - `serve build` 명령어로 실행 가능
 
-#### 4. drawing board
+#### 4. calculator
+
+- html, css 파일 작성
+
+#### drawing board
 
 - 강의 내용대로 parcel을 사용하려고 했지만,
 - @parcel/transformer-sass를 불러오지 못하는 문제가 발생하여
