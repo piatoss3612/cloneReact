@@ -37,6 +37,10 @@
 - html, css 파일 작성
 - 계산기 로직 구현
 
+##### 5. bmi calculator
+
+- html, css 파일 작성
+
 #### drawing board
 
 - 강의 내용대로 parcel을 사용하려고 했지만,
