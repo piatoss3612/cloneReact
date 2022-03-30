@@ -1,10 +1,24 @@
-import React, { useRef, useState } from 'react';
+import { useCallback, useState } from 'react';
+import { useDropzone } from 'react-dropzone';
 import './App.css';
 import ImageBox from './components/ImageBox';
 
 function App() {
-  const inpRef = useRef<HTMLInputElement>(null);
   const [imageList, setImageList] = useState<string[]>([])
+
+  const onDrop = useCallback(acceptedFiles => {
+    if (acceptedFiles.length) {
+			for (const file of acceptedFiles) {
+				const reader = new FileReader();
+
+				reader.readAsDataURL(file)
+				reader.onloadend = (e) => {
+					setImageList(prev => [...prev, e.target?.result as string])
+				}
+			}
+		}
+  }, []);
+  const {getRootProps, getInputProps} = useDropzone({onDrop});
 
   return (
     <div className="container">
@@ -15,22 +29,8 @@ function App() {
           이미지를 추가해주세요.
         </div>
         }
-        <input type="file" ref={inpRef} onChange={(e) => {
-          if (e.currentTarget.files?.[0]) {
-            const file = e.currentTarget.files[0];
-
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onloadend = event => {
-              setImageList(prev => [...prev, event.target?.result as string])
-            }
-          } 
-          
-
-        }}/>
-        <div className="plus-box" onClick={() => {
-          inpRef.current?.click();
-        }}>
+        <div className="plus-box" {...getRootProps()}>
+          <input {...getInputProps()}/>
             +
         </div>
         {
