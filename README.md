@@ -45,6 +45,7 @@
 #### 6. image gallery
 
 - React 프로젝트 생성 및 초기 화면 구현
+- 갤러리 로직 구현
 
 #### drawing board
 
