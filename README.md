@@ -48,12 +48,15 @@
 - 갤러리 로직 구현
 - react-dropzone 라이브러리로 드래그&드롭 기능 구현
 
-#### drawing board
+#### 7. drawing board
 
-- 강의 내용대로 parcel을 사용하려고 했지만,
-- @parcel/transformer-sass를 불러오지 못하는 문제가 발생하여
-- package.json이 날아가버리므로 snowpack을 사용했다
-- eslint & prettier 설정
-- 폰트어썸 패키지 설치 & html, css, 이미지 파일 가져오기
-  - snowpack에서 woff2, ttf 폰트 파일을 로드할 수 없는 문제
-- 프로젝트 보류
+- ~~강의 내용대로 parcel을 사용하려고 했지만,~~
+- ~~@parcel/transformer-sass를 불러오지 못하는 문제가 발생하여~~
+- ~~package.json이 날아가버리므로 snowpack을 사용했다~~
+- ~~eslint & prettier 설정~~
+- ~~폰트어썸 패키지 설치 & html, css, 이미지 파일 가져오기~~
+  - ~~snowpack에서 woff2, ttf 폰트 파일을 로드할 수 없는 문제~~
+- ~~프로젝트 보류~~
+  <br>
+
+- parcel 설정 및 eslint, prettier 설정
