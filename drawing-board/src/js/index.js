@@ -1,10 +1,13 @@
 class DrawingBoard {
   MODE = 'NONE';
   IsMouseDown = false;
+  eraserColor = '#FFF';
+  backgroundColor = '#FFF';
 
   constructor() {
     this.assignElement();
     this.initContext();
+    this.initCanvasBackgroundColor();
     this.addEvent();
   }
 
@@ -18,10 +21,16 @@ class DrawingBoard {
     this.brushSliderEl = this.brushPanelEl.querySelector('#brushSize');
     this.brushSizePreviewEl =
       this.brushPanelEl.querySelector('#brushSizePreview');
+    this.eraserEl = this.toolbarEl.querySelector('#eraser');
   }
 
   initContext() {
     this.context = this.canvasEl.getContext('2d');
+  }
+
+  initCanvasBackgroundColor() {
+    this.context.fillStyle = this.backgroundColor;
+    this.context.fillRect(0, 0, this.canvasEl.width, this.canvasEl.height);
   }
 
   addEvent() {
@@ -32,6 +41,7 @@ class DrawingBoard {
     this.canvasEl.addEventListener('mouseout', this.onMouseOut);
     this.brushSliderEl.addEventListener('input', this.onChangeBrushSize);
     this.colorPickerEl.addEventListener('input', this.onChangeColor);
+    this.eraserEl.addEventListener('click', this.onClickEraser);
   }
 
   onChangeColor = event => {
@@ -50,8 +60,13 @@ class DrawingBoard {
     this.context.beginPath();
     this.context.moveTo(currentPosition.x, currentPosition.y);
     this.context.lineCap = 'round';
-    this.context.strokeStyle = this.colorPickerEl.value;
-    this.context.lineWidth = this.brushSliderEl.value;
+    if (this.MODE === 'BRUSH') {
+      this.context.strokeStyle = this.colorPickerEl.value;
+      this.context.lineWidth = this.brushSliderEl.value;
+    } else if (this.MODE === 'ERASER') {
+      this.context.strokeStyle = this.eraserColor;
+      this.context.lineWidth = 50;
+    }
   };
 
   onMouseMove = event => {
@@ -85,6 +100,15 @@ class DrawingBoard {
     this.canvasEl.style.cursor = IsActive ? 'default' : 'crosshair';
     this.brushPanelEl.classList.toggle('hide');
     this.brushEl.classList.toggle('active');
+  };
+
+  onClickEraser = event => {
+    const IsActive = event.currentTarget.classList.contains('active');
+    this.MODE = IsActive ? 'NONE' : 'ERASER';
+    this.canvasEl.style.cursor = IsActive ? 'default' : 'crosshair';
+    this.brushPanelEl.classList.add('hide');
+    this.eraserEl.classList.toggle('active');
+    this.brushEl.classList.remove('active');
   };
 }
 
