@@ -61,3 +61,4 @@
 
 - parcel 설정 및 eslint, prettier 설정
 - html, scss 파일 가져오기
+- 선 색상, 굵기 설정 기능 및 그리기 기능 구현
