@@ -29,6 +29,7 @@ class DrawingBoard {
     this.navigatorImageEl =
       this.navigatorImageContainerEl.querySelector('#canvasImg');
     this.undoEl = this.toolbarEl.querySelector('#undo');
+    this.clearEl = this.toolbarEl.querySelector('#clear');
   }
 
   initContext() {
@@ -51,6 +52,7 @@ class DrawingBoard {
     this.eraserEl.addEventListener('click', this.onClickEraser);
     this.navigatorEl.addEventListener('click', this.onClickNavigator);
     this.undoEl.addEventListener('click', this.onClickUndo);
+    this.clearEl.addEventListener('click', this.onClickClear);
   }
 
   onChangeColor = event => {
@@ -164,6 +166,13 @@ class DrawingBoard {
       );
     };
     prevImg.src = prevDataUrl;
+  };
+
+  onClickClear = () => {
+    this.context.clearRect(0, 0, this.canvasEl.width, this.canvasEl.height);
+    this.undoArray = [];
+    this.updateNavigator();
+    this.initCanvasBackgroundColor();
   };
 }
 
