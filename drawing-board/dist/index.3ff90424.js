@@ -5,6 +5,21 @@ class DrawingBoard {
     backgroundColor = '#FFF';
     IsNavigatorVisible = false;
     undoArray = [];
+    containerEl;
+    canvasEl;
+    toolbarEl;
+    brushEl;
+    colorPickerEl;
+    brushPanelEl;
+    brushSliderEl;
+    brushSizePreviewEl;
+    eraserEl;
+    navigatorEl;
+    navigatorImageContainerEl;
+    navigatorImageEl;
+    undoEl;
+    clearEl;
+    downloadEl;
     constructor(){
         this.assignElement();
         this.initContext();
@@ -26,6 +41,7 @@ class DrawingBoard {
         this.navigatorImageEl = this.navigatorImageContainerEl.querySelector('#canvasImg');
         this.undoEl = this.toolbarEl.querySelector('#undo');
         this.clearEl = this.toolbarEl.querySelector('#clear');
+        this.downloadEl = this.toolbarEl.querySelector('#download');
     }
     initContext() {
         this.context = this.canvasEl.getContext('2d');
@@ -46,6 +62,7 @@ class DrawingBoard {
         this.navigatorEl.addEventListener('click', this.onClickNavigator);
         this.undoEl.addEventListener('click', this.onClickUndo);
         this.clearEl.addEventListener('click', this.onClickClear);
+        this.downloadEl.addEventListener('click', this.onClickDownload);
     }
     onChangeColor = (event)=>{
         this.brushSizePreviewEl.style.backgroundColor = event.target.value;
@@ -142,6 +159,10 @@ class DrawingBoard {
         this.undoArray = [];
         this.updateNavigator();
         this.initCanvasBackgroundColor();
+    };
+    onClickDownload = ()=>{
+        this.downloadEl.href = this.canvasEl.toDataURL('image/jpeg', 1);
+        this.downloadEl.download = 'example.jpeg';
     };
 }
 new DrawingBoard();
