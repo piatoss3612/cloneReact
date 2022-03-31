@@ -3,6 +3,8 @@ class DrawingBoard {
   IsMouseDown = false;
   eraserColor = '#FFF';
   backgroundColor = '#FFF';
+  IsNavigatorVisible = false;
+  undoArray = [];
 
   constructor() {
     this.assignElement();
@@ -26,6 +28,7 @@ class DrawingBoard {
     this.navigatorImageContainerEl = this.containerEl.querySelector('#imgNav');
     this.navigatorImageEl =
       this.navigatorImageContainerEl.querySelector('#canvasImg');
+    this.undoEl = this.toolbarEl.querySelector('#undo');
   }
 
   initContext() {
@@ -47,6 +50,7 @@ class DrawingBoard {
     this.colorPickerEl.addEventListener('input', this.onChangeColor);
     this.eraserEl.addEventListener('click', this.onClickEraser);
     this.navigatorEl.addEventListener('click', this.onClickNavigator);
+    this.undoEl.addEventListener('click', this.onClickUndo);
   }
 
   onChangeColor = event => {
@@ -72,6 +76,7 @@ class DrawingBoard {
       this.context.strokeStyle = this.eraserColor;
       this.context.lineWidth = 50;
     }
+    this.saveState();
   };
 
   onMouseMove = event => {
@@ -120,13 +125,45 @@ class DrawingBoard {
   };
 
   onClickNavigator = event => {
+    this.IsNavigatorVisible = !event.currentTarget.classList.cotains('active');
     event.currentTarget.classList.toggle('active');
     this.navigatorImageContainerEl.classList.toggle('hide');
     this.updateNavigator();
   };
 
   updateNavigator = () => {
+    if (!this.IsNavigatorVisible) return;
     this.navigatorImageEl.src = this.canvasEl.toDataURL();
+  };
+
+  saveState = () => {
+    if (this.undoArray.length > 4) {
+      this.undoArray.shift();
+      this.undoArray.push(this.canvasEl.toDataURL());
+      return;
+    }
+    this.undoArray.push(this.canvasEl.toDataURL());
+  };
+
+  onClickUndo = () => {
+    if (this.undoArray.length === 0) return;
+    let prevDataUrl = this.undoArray.pop();
+    let prevImg = new Image();
+    prevImg.onload = () => {
+      this.context.clearRect(0, 0, this.canvasEl.width, this.canvasEl.height);
+      this.context.drawImage(
+        prevImg,
+        0,
+        0,
+        this.canvasEl.width,
+        this.canvasEl.height,
+        0,
+        0,
+        this.canvasEl.width,
+        this.canvasEl.height,
+      );
+    };
+    prevImg.src = prevDataUrl;
   };
 }
 

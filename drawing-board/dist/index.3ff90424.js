@@ -3,6 +3,8 @@ class DrawingBoard {
     IsMouseDown = false;
     eraserColor = '#FFF';
     backgroundColor = '#FFF';
+    IsNavigatorVisible = false;
+    undoArray = [];
     constructor(){
         this.assignElement();
         this.initContext();
@@ -22,6 +24,7 @@ class DrawingBoard {
         this.navigatorEl = this.toolbarEl.querySelector('#navigator');
         this.navigatorImageContainerEl = this.containerEl.querySelector('#imgNav');
         this.navigatorImageEl = this.navigatorImageContainerEl.querySelector('#canvasImg');
+        this.undoEl = this.toolbarEl.querySelector('#undo');
     }
     initContext() {
         this.context = this.canvasEl.getContext('2d');
@@ -40,6 +43,7 @@ class DrawingBoard {
         this.colorPickerEl.addEventListener('input', this.onChangeColor);
         this.eraserEl.addEventListener('click', this.onClickEraser);
         this.navigatorEl.addEventListener('click', this.onClickNavigator);
+        this.undoEl.addEventListener('click', this.onClickUndo);
     }
     onChangeColor = (event)=>{
         this.brushSizePreviewEl.style.backgroundColor = event.target.value;
@@ -62,6 +66,7 @@ class DrawingBoard {
             this.context.strokeStyle = this.eraserColor;
             this.context.lineWidth = 50;
         }
+        this.saveState();
     };
     onMouseMove = (event)=>{
         if (!this.isMouseDown) return;
@@ -103,12 +108,32 @@ class DrawingBoard {
         this.brushEl.classList.remove('active');
     };
     onClickNavigator = (event)=>{
+        this.IsNavigatorVisible = !event.currentTarget.classList.cotains('active');
         event.currentTarget.classList.toggle('active');
         this.navigatorImageContainerEl.classList.toggle('hide');
         this.updateNavigator();
     };
     updateNavigator = ()=>{
+        if (!this.IsNavigatorVisible) return;
         this.navigatorImageEl.src = this.canvasEl.toDataURL();
+    };
+    saveState = ()=>{
+        if (this.undoArray.length > 4) {
+            this.undoArray.shift();
+            this.undoArray.push(this.canvasEl.toDataURL());
+            return;
+        }
+        this.undoArray.push(this.canvasEl.toDataURL());
+    };
+    onClickUndo = ()=>{
+        if (this.undoArray.length === 0) return;
+        let prevDataUrl = this.undoArray.pop();
+        let prevImg = new Image();
+        prevImg.onload = ()=>{
+            this.context.clearRect(0, 0, this.canvasEl.width, this.canvasEl.height);
+            this.context.drawImage(prevImg, 0, 0, this.canvasEl.width, this.canvasEl.height, 0, 0, this.canvasEl.width, this.canvasEl.height);
+        };
+        prevImg.src = prevDataUrl;
     };
 }
 new DrawingBoard();
