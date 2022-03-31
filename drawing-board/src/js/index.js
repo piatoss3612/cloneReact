@@ -22,6 +22,10 @@ class DrawingBoard {
     this.brushSizePreviewEl =
       this.brushPanelEl.querySelector('#brushSizePreview');
     this.eraserEl = this.toolbarEl.querySelector('#eraser');
+    this.navigatorEl = this.toolbarEl.querySelector('#navigator');
+    this.navigatorImageContainerEl = this.containerEl.querySelector('#imgNav');
+    this.navigatorImageEl =
+      this.navigatorImageContainerEl.querySelector('#canvasImg');
   }
 
   initContext() {
@@ -42,6 +46,7 @@ class DrawingBoard {
     this.brushSliderEl.addEventListener('input', this.onChangeBrushSize);
     this.colorPickerEl.addEventListener('input', this.onChangeColor);
     this.eraserEl.addEventListener('click', this.onClickEraser);
+    this.navigatorEl.addEventListener('click', this.onClickNavigator);
   }
 
   onChangeColor = event => {
@@ -79,11 +84,13 @@ class DrawingBoard {
   onMouseUp = () => {
     if (this.MODE === 'NONE') return;
     this.isMouseDown = false;
+    this.updateNavigator();
   };
 
   onMouseOut = () => {
     if (this.MODE === 'NONE') return;
     this.isMouseDown = false;
+    this.updateNavigator();
   };
 
   getMousePosition = event => {
@@ -99,7 +106,8 @@ class DrawingBoard {
     this.MODE = IsActive ? 'NONE' : 'BRUSH';
     this.canvasEl.style.cursor = IsActive ? 'default' : 'crosshair';
     this.brushPanelEl.classList.toggle('hide');
-    this.brushEl.classList.toggle('active');
+    event.currentTarget.classList.toggle('active');
+    this.eraserEl.classList.remove('active');
   };
 
   onClickEraser = event => {
@@ -107,8 +115,18 @@ class DrawingBoard {
     this.MODE = IsActive ? 'NONE' : 'ERASER';
     this.canvasEl.style.cursor = IsActive ? 'default' : 'crosshair';
     this.brushPanelEl.classList.add('hide');
-    this.eraserEl.classList.toggle('active');
+    event.currentTarget.classList.toggle('active');
     this.brushEl.classList.remove('active');
+  };
+
+  onClickNavigator = event => {
+    event.currentTarget.classList.toggle('active');
+    this.navigatorImageContainerEl.classList.toggle('hide');
+    this.updateNavigator();
+  };
+
+  updateNavigator = () => {
+    this.navigatorImageEl.src = this.canvasEl.toDataURL();
   };
 }
 
