@@ -72,3 +72,4 @@
 
 - rollup 모듈 번들러 설정 & eslint, prettier 설정
 - html, scss 파일 가져오기
+- 폰트 어썸 아이콘 적용
