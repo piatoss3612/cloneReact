@@ -1,0 +1,1 @@
+{"version":3,"file":"bundle.js","sources":["../src/js/index.js"],"sourcesContent":["import '../scss/style.scss';\r\nconsole.log('todo-list');\r\n"],"names":[],"mappings":";;;;;;;;;;;;;;;;;;;;;;;;AACA,OAAO,CAAC,GAAG,CAAC,WAAW,CAAC;;"}

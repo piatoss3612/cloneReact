@@ -67,3 +67,8 @@
 - 실행 취소 기능 구현
 - 초기화 기능 구현
 - 캔버스 다운로드 기능 구현 & 빌드
+
+#### 8. to do list
+
+- rollup 모듈 번들러 설정 & eslint, prettier 설정
+- html, scss 파일 가져오기
