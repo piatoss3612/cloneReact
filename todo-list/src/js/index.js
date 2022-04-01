@@ -15,11 +15,22 @@ class TodoList {
 
     this.todoContainerEl = document.getElementById('todo-container');
     this.todoListEl = this.todoContainerEl.querySelector('#todo-list');
+
+    this.radioAreaEl = this.inputContainerEl.querySelector('#radio-area');
+    this.filterRadioBtnEls =
+      this.radioAreaEl.querySelectorAll('input[name=filter]');
   }
 
   addEvent() {
     this.addBtnEl.addEventListener('click', this.onClickAddBtn);
     this.todoListEl.addEventListener('click', this.onClickTodoList);
+    this.addRadioBtnEvent();
+  }
+
+  addRadioBtnEvent() {
+    for (const filterRadioBtnEl of this.filterRadioBtnEls) {
+      filterRadioBtnEl.addEventListener('click', this.onClickRadioBtn);
+    }
   }
 
   onClickAddBtn = () => {
@@ -109,6 +120,32 @@ class TodoList {
   completeTodo = target => {
     const todoDiv = target.closest('.todo');
     todoDiv.classList.toggle('done');
+  };
+
+  onClickRadioBtn = event => {
+    const { value } = event.target;
+    this.filterTodo(value);
+  };
+
+  filterTodo = status => {
+    const todoDivEls = this.todoListEl.querySelectorAll('div.todo');
+    for (const todoDivEl of todoDivEls) {
+      switch (status) {
+        case 'ALL':
+          todoDivEl.style.display = 'flex';
+          break;
+        case 'DONE':
+          todoDivEl.style.display = todoDivEl.classList.contains('done')
+            ? 'flex'
+            : 'none';
+          break;
+        case 'TODO':
+          todoDivEl.style.display = todoDivEl.classList.contains('done')
+            ? 'none'
+            : 'flex';
+          break;
+      }
+    }
   };
 }
 
