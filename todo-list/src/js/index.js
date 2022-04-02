@@ -124,7 +124,7 @@ class TodoList {
 
   onClickRadioBtn = event => {
     const { value } = event.target;
-    this.filterTodo(value);
+    window.location.href = `#/${value.toLowerCase()}`;
   };
 
   filterTodo = status => {
@@ -149,6 +149,55 @@ class TodoList {
   };
 }
 
+class Router {
+  routes = [];
+  notFoundCallback = () => {};
+
+  init() {
+    window.addEventListener('hashchange', this.checkRoutes);
+    if (!window.location.hash) {
+      window.location.hash = '#/';
+    }
+    this.checkRoutes();
+  }
+
+  addRoute = (url, callback) => {
+    this.routes.push({ url, callback });
+    return this;
+  };
+
+  checkRoutes = () => {
+    const currentRoute = this.routes.find(
+      route => route.url === window.location.hash,
+    );
+
+    if (!currentRoute) {
+      this.notFoundCallback();
+      return;
+    }
+
+    currentRoute.callback();
+  };
+
+  setNotFound = callback => {
+    this.notFoundCallback = callback;
+    return this;
+  };
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+  const router = new Router();
   const todoList = new TodoList();
+  const routeCallback = status => () => {
+    todoList.filterTodo(status);
+    document.querySelector(
+      `input[type='radio'][value='${status}']`,
+    ).checked = true;
+  };
+  router
+    .addRoute('#/all', routeCallback('ALL'))
+    .addRoute('#/todo', routeCallback('TODO'))
+    .addRoute('#/done', routeCallback('DONE'))
+    .setNotFound(routeCallback('ALL'))
+    .init();
 });
