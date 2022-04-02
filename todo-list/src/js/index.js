@@ -1,4 +1,6 @@
 import '@fortawesome/fontawesome-free/js/all.min.js';
+import Storage from './storage';
+import Router from './router';
 import '../scss/style.scss';
 
 class TodoList {
@@ -176,74 +178,6 @@ class TodoList {
       const { id, content, status } = todoData;
       this.createTodoElement(id, content, status);
     }
-  };
-}
-
-class Router {
-  routes = [];
-  notFoundCallback = () => {};
-
-  init() {
-    window.addEventListener('hashchange', this.checkRoutes);
-    if (!window.location.hash) {
-      window.location.hash = '#/';
-    }
-    this.checkRoutes();
-  }
-
-  addRoute = (url, callback) => {
-    this.routes.push({ url, callback });
-    return this;
-  };
-
-  checkRoutes = () => {
-    const currentRoute = this.routes.find(
-      route => route.url === window.location.hash,
-    );
-
-    if (!currentRoute) {
-      this.notFoundCallback();
-      return;
-    }
-
-    currentRoute.callback();
-  };
-
-  setNotFound = callback => {
-    this.notFoundCallback = callback;
-    return this;
-  };
-}
-
-class Storage {
-  saveTodo = (id, todoContent) => {
-    const todosData = this.getTodos();
-    todosData.push({ id, content: todoContent, status: 'TODO' });
-    localStorage.setItem('todos', JSON.stringify(todosData));
-  };
-  editTodo = (id, todoContent, status = 'TODO') => {
-    const todosData = this.getTodos();
-    const todoIndex = todosData.findIndex(todo => todo.id == id);
-    const targetTodoData = todosData[todoIndex];
-    const editedTodoData =
-      todoContent === ''
-        ? { ...targetTodoData, status }
-        : { ...targetTodoData, content: todoContent };
-    todosData.splice(todoIndex, 1, editedTodoData);
-    localStorage.setItem('todos', JSON.stringify(todosData));
-  };
-  deleteTodo = id => {
-    const todosData = this.getTodos();
-    todosData.splice(
-      todosData.findIndex(todo => todo.id == id),
-      1,
-    );
-    localStorage.setItem('todos', JSON.stringify(todosData));
-  };
-  getTodos = () => {
-    return localStorage.getItem('todos') === null
-      ? []
-      : JSON.parse(localStorage.getItem('todos'));
   };
 }
 
