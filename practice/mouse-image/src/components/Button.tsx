@@ -13,7 +13,6 @@ const Button = ({ selected, name, onClick }: ButtopProps) => {
         border: `solid ${selected ? 6 : 1}px black`,
         boxSizing: "border-box",
         padding: "16px",
-        cursor: "pointer",
       }}
       onClick={onClick}
     >
