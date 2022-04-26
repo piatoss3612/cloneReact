@@ -1,10 +1,10 @@
 interface ButtopProps {
-  selected?: boolean;
+  selected: boolean;
   name: string;
   onClick: () => void;
 }
 
-const Button = ({ selected, name, onClick }: ButtopProps) => {
+const Button = ({ selected = false, name, onClick }: ButtopProps) => {
   return (
     <div
       style={{
