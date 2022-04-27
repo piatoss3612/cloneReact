@@ -29,7 +29,6 @@ const ProgressArea = forwardRef((props, ref) => {
       audio.current.pause();
     },
     changeVolume: (volume) => {
-      // console.log(audio.current.volume);
       audio.current.volume = volume;
     },
   }));
