@@ -17,7 +17,7 @@ const Controls = ({
   resetDuration,
   play,
   pause,
-  setVolume,
+  changeVolume,
 }) => {
   const playing = useSelector((state) => state.playing);
   const onClickPause = () => {
@@ -26,6 +26,10 @@ const Controls = ({
 
   const onClickPlay = () => {
     play();
+  };
+
+  const onChangeVolume = (event) => {
+    changeVolume(event.currentTarget.value);
   };
 
   return (
@@ -55,6 +59,7 @@ const Controls = ({
           min="0"
           max="1"
           step="0.1"
+          onChange={onChangeVolume}
         />
       </div>
     </div>

@@ -19,6 +19,9 @@ const ProgressArea = forwardRef((props, ref) => {
     pause: () => {
       audio.current.pause();
     },
+    changeVolume: (volume) => {
+      audio.current.volume = volume;
+    },
   }));
 
   const onPlay = () => {

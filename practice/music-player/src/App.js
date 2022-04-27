@@ -20,7 +20,11 @@ const App = () => {
       <div className="container">
         <SongDetail />
         <ProgressArea ref={audioRef} />
-        <Controls play={onPlay} pause={onPuase} />
+        <Controls
+          play={onPlay}
+          pause={onPuase}
+          changeVolume={audioRef.current.changeVolume}
+        />
         <PlayList />
       </div>
     </div>
