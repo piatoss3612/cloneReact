@@ -3,10 +3,11 @@ import Controls from "./components/Controls/Controls";
 import PlayList from "./components/PlayList/PlayList";
 import ProgressArea from "./components/ProgressArea/ProgressArea";
 import SongDetail from "./components/SongDetail/SongDetail";
-import React, { useRef } from "react";
+import React, { useState, useRef } from "react";
 
 const App = () => {
   const audioRef = useRef();
+  const [showPlayList, setShowPlayList] = useState(false);
 
   const onPlay = () => {
     audioRef.current.play();
@@ -33,8 +34,12 @@ const App = () => {
           pause={onPuase}
           changeVolume={onChangeVolume}
           resetDuration={resetDuration}
+          setShowPlayList={setShowPlayList}
         />
-        <PlayList />
+        <PlayList
+          showPlayList={showPlayList}
+          setShowPlayList={setShowPlayList}
+        />
       </div>
     </div>
   );
