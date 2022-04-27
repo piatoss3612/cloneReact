@@ -19,12 +19,21 @@ const App = () => {
     audioRef.current.changeVolume(volume);
   };
 
+  const resetDuration = () => {
+    audioRef.current.resetDuration();
+  };
+
   return (
     <div className="App">
       <div className="container">
         <SongDetail />
         <ProgressArea ref={audioRef} />
-        <Controls play={onPlay} pause={onPuase} changeVolume={onChangeVolume} />
+        <Controls
+          play={onPlay}
+          pause={onPuase}
+          changeVolume={onChangeVolume}
+          resetDuration={resetDuration}
+        />
         <PlayList />
       </div>
     </div>
