@@ -15,16 +15,16 @@ const App = () => {
     audioRef.current.pause();
   };
 
+  const onChangeVolume = (volume) => {
+    audioRef.current.changeVolume(volume);
+  };
+
   return (
     <div className="App">
       <div className="container">
         <SongDetail />
         <ProgressArea ref={audioRef} />
-        <Controls
-          play={onPlay}
-          pause={onPuase}
-          changeVolume={audioRef.current.changeVolume}
-        />
+        <Controls play={onPlay} pause={onPuase} changeVolume={onChangeVolume} />
         <PlayList />
       </div>
     </div>
