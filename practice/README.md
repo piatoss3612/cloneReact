@@ -103,3 +103,7 @@
 - `npm run build` 스트립트 실행
 - 터미널에서 `npm login`
 - `npm publish --access public` 명령어 실행, 패키지 배포
+
+#### 12. music-player
+
+- 앞서 배포한 패키지를 사용해 음악 플레이어를 제작해보는 프로젝트
