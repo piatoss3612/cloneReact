@@ -4,6 +4,7 @@ import {
   useImperativeHandle,
   useState,
   useCallback,
+  memo,
 } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import {
@@ -43,38 +44,41 @@ const ProgressArea = forwardRef((props, ref) => {
     },
   }));
 
-  const onPlay = () => {
+  const onPlay = useCallback(() => {
     dispatch(playMusic());
-  };
+  }, [dispatch]);
 
-  const onPause = () => {
+  const onPause = useCallback(() => {
     dispatch(stopMusic());
-  };
+  }, [dispatch]);
 
-  const getTime = (time) => {
+  const getTime = useCallback((time) => {
     const currentMin = parseInt(time / 60, 10);
     const currentSec = parseInt(time % 60);
     const minutes = currentMin > 9 ? currentMin : `0${currentMin}`;
     const seconds = currentSec > 9 ? currentSec : `0${currentSec}`;
     return `${minutes}:${seconds}`;
-  };
+  }, []);
 
-  const onTimeUpdate = (event) => {
-    if (event.target.readyState === 0) return;
-    const currentTime = event.target.currentTime;
-    const duration = event.target.duration;
-    const progressBarWidth = (currentTime / duration) * 100;
-    progressBar.current.style.width = `${progressBarWidth}%`;
-    setCurrentTime(getTime(currentTime));
-    setDuration(getTime(duration));
-  };
+  const onTimeUpdate = useCallback(
+    (event) => {
+      if (event.target.readyState === 0) return;
+      const currentTime = event.target.currentTime;
+      const duration = event.target.duration;
+      const progressBarWidth = (currentTime / duration) * 100;
+      progressBar.current.style.width = `${progressBarWidth}%`;
+      setCurrentTime(getTime(currentTime));
+      setDuration(getTime(duration));
+    },
+    [getTime]
+  );
 
-  const onClickProgress = (event) => {
+  const onClickProgress = useCallback((event) => {
     const progressBarWidth = event.currentTarget.clientWidth;
     const offsetX = event.nativeEvent.offsetX;
     const duration = audio.current.duration;
     audio.current.currentTime = (offsetX / progressBarWidth) * duration;
-  };
+  }, []);
 
   const onMusicEnd = useCallback(() => {
     if (repeat === "ONE") {
@@ -106,4 +110,4 @@ const ProgressArea = forwardRef((props, ref) => {
   );
 });
 
-export default ProgressArea;
+export default memo(ProgressArea);

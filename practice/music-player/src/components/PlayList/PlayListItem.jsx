@@ -10,7 +10,6 @@ const getDuration = (src) => {
       const tempSec = parseInt(audio.duration % 60);
       const minutes = tempMin > 9 ? tempMin : `0${tempMin}`;
       const seconds = tempSec > 9 ? tempSec : `0${tempSec}`;
-      console.log(minutes, seconds);
       resolve(`${minutes}:${seconds}`);
     };
     audio.src = src;

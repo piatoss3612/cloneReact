@@ -5,23 +5,38 @@ import SortableList from "@piatoss/sortable-list-test";
 import classNames from "classnames";
 import "./PlayList.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { setCurrentIndex } from "../../store/musicPlayerReducer";
+import {
+  setCurrentIndex,
+  updatePlayList,
+} from "../../store/musicPlayerReducer";
+import { memo, useCallback } from "react";
 
 const PlayList = ({ showPlayList, setShowPlayList }) => {
   const playList = useSelector((state) => state.playList);
   const dispatch = useDispatch();
 
-  const closePlayList = () => {
+  const closePlayList = useCallback(() => {
     setShowPlayList(false);
-  };
+  }, [setShowPlayList]);
 
-  const renderItem = (item, index) => (
-    <PlayListItem item={item} index={index} />
+  const renderItem = useCallback(
+    (item, index) => <PlayListItem item={item} index={index} />,
+    []
   );
 
-  const onClickItem = (index) => {
-    dispatch(setCurrentIndex(index));
-  };
+  const onClickItem = useCallback(
+    (index) => {
+      dispatch(setCurrentIndex(index));
+    },
+    [dispatch]
+  );
+
+  const onDropItem = useCallback(
+    (newPlayList) => {
+      dispatch(updatePlayList(newPlayList));
+    },
+    [dispatch]
+  );
 
   return (
     <div className={classNames("play-list", { show: showPlayList })}>
@@ -40,10 +55,11 @@ const PlayList = ({ showPlayList, setShowPlayList }) => {
           data={playList}
           renderItem={renderItem}
           onClickItem={onClickItem}
+          onDropItem={onDropItem}
         />
       </ul>
     </div>
   );
 };
 
-export default PlayList;
+export default memo(PlayList);

@@ -1,6 +1,7 @@
 import "./SongDetail.scss";
 import img1 from "../../images/music-1.jpg";
 import { useSelector } from "react-redux";
+import { memo } from "react";
 
 const SongDetail = () => {
   const playList = useSelector((state) => state.playList);
@@ -22,4 +23,4 @@ const SongDetail = () => {
   );
 };
 
-export default SongDetail;
+export default memo(SongDetail);
