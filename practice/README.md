@@ -96,3 +96,10 @@
 - 카카오 지도 응용하기
 
 #### 11. Sortable 컴포넌트 제작 및 npm 배포
+
+- drag & drop이 가능한 리스트 컴포넌트 제작
+- `npm i -D @babel/cli @babel/preset-react`: npm 배포를 위해 바벨 설정
+- `package.json` 파일 수정
+- `npm run build` 스트립트 실행
+- 터미널에서 `npm login`
+- `npm publish --access public` 명령어 실행, 패키지 배포
