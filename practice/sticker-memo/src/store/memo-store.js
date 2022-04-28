@@ -26,10 +26,19 @@ export default class MemoStore {
     makeObservable(this, {
       memos: observable,
       addMemo: action,
+      editMemo: action,
     });
   }
 
   addMemo = () => {
     this.memos.push(new MemoModel());
+  };
+
+  editMemo = (id, content) => {
+    this.memos[this.getMemoIndex(id)].content = content;
+  };
+
+  getMemoIndex = (id) => {
+    return this.memos.findIndex((memo) => memo.id === id);
   };
 }
