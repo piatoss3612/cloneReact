@@ -118,3 +118,5 @@
 - SortableList 컴포넌트 적용 및 곡 선택 기능 구현
 - play list에 음악 재생 시간 표시
 - play list drag&drop 기능 구현 및 최적화
+
+#### Draggable 컴포넌트 제작 및 npm 배포
