@@ -59,11 +59,16 @@ export const Memo = observer(
     }, [Delete, item.id]);
 
     return (
-      <Draggable handleRef={handleRef} onMove={onChangePosition}>
+      <Draggable
+        handleRef={handleRef}
+        onMove={onChangePosition}
+        x={item.x}
+        y={item.y}
+      >
         <div
           ref={memoContainer}
           className="memo-container"
-          style={{ width: `${250}px`, height: `${300}px` }}
+          style={{ width: `${item.width}px`, height: `${item.height}px` }}
         >
           <div className="menu">
             <DragHandleIcon
