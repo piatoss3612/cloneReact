@@ -10,10 +10,22 @@ const App = ({ store }) => {
     [store]
   );
 
+  const setWidthHeight = useCallback(
+    (id, width, height) => {
+      store.setWidthHeight(id, width, height);
+    },
+    [store]
+  );
+
   return (
     <>
       {store.memos.map((memo) => (
-        <Memo key={memo.id} Edit={editMemo} item={memo} />
+        <Memo
+          key={memo.id}
+          item={memo}
+          Edit={editMemo}
+          SetWidthHeight={setWidthHeight}
+        />
       ))}
       <AddIcon
         sx={{
