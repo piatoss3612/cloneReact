@@ -1,5 +1,11 @@
+import { Memo } from "./components/Memo";
+
 function App() {
-  return <></>;
+  return (
+    <>
+      <Memo />
+    </>
+  );
 }
 
 export default App;
