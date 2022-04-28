@@ -5,6 +5,7 @@ import { useCallback } from "react";
 
 const App = ({ store }) => {
   const addMemo = useCallback(() => store.addMemo(), [store]);
+
   const editMemo = useCallback(
     (id, content) => store.editMemo(id, content),
     [store]
@@ -17,6 +18,13 @@ const App = ({ store }) => {
     [store]
   );
 
+  const setPosition = useCallback(
+    (id, x, y) => {
+      store.setPosition(id, x, y);
+    },
+    [store]
+  );
+
   return (
     <>
       {store.memos.map((memo) => (
@@ -24,6 +32,7 @@ const App = ({ store }) => {
           key={memo.id}
           item={memo}
           Edit={editMemo}
+          SetPosition={setPosition}
           SetWidthHeight={setWidthHeight}
         />
       ))}

@@ -28,6 +28,7 @@ export default class MemoStore {
       addMemo: action,
       editMemo: action,
       setWidthHeight: action,
+      setPosition: action,
     });
   }
 
@@ -47,5 +48,11 @@ export default class MemoStore {
     const index = this.getMemoIndex(id);
     this.memos[index].width = width;
     this.memos[index].height = height;
+  };
+
+  setPosition = (id, x, y) => {
+    const index = this.getMemoIndex(id);
+    this.memos[index].x = x;
+    this.memos[index].y = y;
   };
 }
