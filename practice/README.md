@@ -120,3 +120,5 @@
 - play list drag&drop 기능 구현 및 최적화
 
 #### Draggable 컴포넌트 제작 및 npm 배포
+
+- 드래그 이동이 가능한 컴포넌트 제작 및 debounce 적용
