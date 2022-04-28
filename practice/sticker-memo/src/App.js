@@ -25,6 +25,13 @@ const App = ({ store }) => {
     [store]
   );
 
+  const deleteMemo = useCallback(
+    (id) => {
+      store.removeMemo(id);
+    },
+    [store]
+  );
+
   return (
     <>
       {store.memos.map((memo) => (
@@ -34,6 +41,7 @@ const App = ({ store }) => {
           Edit={editMemo}
           SetPosition={setPosition}
           SetWidthHeight={setWidthHeight}
+          Delete={deleteMemo}
         />
       ))}
       <AddIcon

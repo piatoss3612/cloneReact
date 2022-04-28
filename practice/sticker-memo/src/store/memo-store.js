@@ -29,6 +29,7 @@ export default class MemoStore {
       editMemo: action,
       setWidthHeight: action,
       setPosition: action,
+      removeMemo: action,
     });
   }
 
@@ -54,5 +55,9 @@ export default class MemoStore {
     const index = this.getMemoIndex(id);
     this.memos[index].x = x;
     this.memos[index].y = y;
+  };
+
+  removeMemo = (id) => {
+    this.memos = this.memos.filter((memo) => memo.id !== id);
   };
 }

@@ -22,12 +22,6 @@ export const Memo = observer(
       [item.id, Edit]
     );
 
-    useEffect(() => {
-      return () => {
-        onChangeMemo.cancel();
-      };
-    }, [onChangeMemo]);
-
     const onChangeSize = useMemo(
       () =>
         debounce((entry) => {
@@ -36,6 +30,13 @@ export const Memo = observer(
         }, 100),
       [item.id, SetWidthHeight]
     );
+
+    useEffect(() => {
+      return () => {
+        onChangeMemo.cancel();
+        onChangeSize.cancel();
+      };
+    }, [onChangeMemo, onChangeSize]);
 
     useLayoutEffect(() => {
       let RO = new ResizeObserver(onChangeSize);
@@ -53,6 +54,10 @@ export const Memo = observer(
       [item.id, SetPosition]
     );
 
+    const deleteMemo = useCallback(() => {
+      Delete(item.id);
+    }, [Delete, item.id]);
+
     return (
       <Draggable handleRef={handleRef} onMove={onChangePosition}>
         <div
@@ -67,6 +72,7 @@ export const Memo = observer(
             />
             <CloseIcon
               sx={{ cursor: "pointer", fontSize: "25px", float: "right" }}
+              onClick={deleteMemo}
             />
           </div>
           <textarea
