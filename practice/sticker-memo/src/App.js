@@ -1,11 +1,29 @@
+import { observer } from "mobx-react";
 import { Memo } from "./components/Memo";
+import AddIcon from "@mui/icons-material/Add";
+import { useCallback } from "react";
 
-function App() {
+const App = ({ store }) => {
+  const addMemo = useCallback(() => store.addMemo(), [store]);
+
   return (
     <>
-      <Memo />
+      {store.memos.map((memo) => (
+        <Memo key={memo.id} />
+      ))}
+      <AddIcon
+        sx={{
+          float: "right",
+          backgroundColor: "#e4e4e4",
+          borderRadius: "5px",
+          cursor: "pointer",
+          fontSize: "30px",
+          border: "1px solid black",
+        }}
+        onClick={addMemo}
+      />
     </>
   );
-}
+};
 
-export default App;
+export default observer(App);
