@@ -143,3 +143,4 @@
 
 - CSS-IN-JS를 사용한 실습: `npm i @emotion/react @emotion/styled`
 - 기본 UI 구현
+- 로또 추첨 로직 구현

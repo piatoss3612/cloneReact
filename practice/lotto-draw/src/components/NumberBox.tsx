@@ -33,11 +33,12 @@ const NumberBox = ({
         }
       }}
     >
-      {!setNum && <option>+</option>}
+      {!num && !setNum && <option>+</option>}
+      {num && !setNum && <option>{num}</option>}
       {!!setNum &&
         Array(45)
           .fill(0)
-          .map((value, idx) => <option>{idx + 1}</option>)}
+          .map((_, idx) => <option key={idx}>{idx + 1}</option>)}
     </StyledNumberBox>
   );
 };
